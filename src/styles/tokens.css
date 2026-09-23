@@ -1,0 +1,106 @@
+/* Ethra design tokens — Instrument (dark only). Generated from the design canvas. */
+
+:root {
+  /* Background */
+  --color-bg-canvas: #0E0F11;
+  --color-bg-panel: #121316;
+  --color-bg-raised: #15171A;
+  --color-bg-subtle: #1A1C20;
+  --color-bg-muted: #1F2226;
+  /* Border */
+  --color-border-default: #26292E;
+  --color-border-subtle: #1C1E22;
+  --color-border-strong: #33373D;
+  /* Text */
+  --color-text-primary: #ECEDEE;
+  --color-text-secondary: #C9CCD1;
+  --color-text-muted: #8B9098;
+  --color-text-disabled: #5B6068;
+  /* Brand */
+  --color-brand: #F0B429;
+  --color-brand-hover: #FFC53D;
+  --color-brand-muted: #A8792A;
+  --color-on-brand: #0E0F11;
+  /* Network */
+  --color-network-mainnet: #4DA3FF;
+  --color-network-sepolia: #D57BFF;
+  --color-network-local: #9AA4B2;
+  /* Semantic */
+  --color-gain: #4ADE80;
+  --color-loss: #F87171;
+  --color-pending: #C9CCD1;
+  /* Chart */
+  --color-chart-1: #F0B429;
+  --color-chart-2: #E6E1D3;
+  --color-chart-3: #A8792A;
+  --color-chart-4: #8B9098;
+  --color-chart-5: #5B6068;
+  --color-chart-6: #3A3E45;
+  /* Network text + tints (badge fg / bg / border) */
+  --color-network-mainnet-fg: #8CC4FF;
+  --color-network-mainnet-bg: rgba(77,163,255,0.12);
+  --color-network-mainnet-border: rgba(77,163,255,0.45);
+  --color-network-sepolia-fg: #E3A8FF;
+  --color-network-sepolia-bg: rgba(213,123,255,0.12);
+  --color-network-sepolia-border: rgba(213,123,255,0.45);
+  --color-network-local-fg: #C3CAD4;
+  --color-network-local-bg: rgba(154,164,178,0.12);
+  --color-network-local-border: rgba(154,164,178,0.45);
+  --color-gain-bg: rgba(74,222,128,0.10);
+  --color-loss-bg: rgba(248,113,113,0.10);
+  --color-pending-bg: rgba(201,204,209,0.08);
+
+  --font-sans: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --text-display: 44px; --leading-display: 1.05; --weight-display: 500; --tracking-display: -0.03em;
+  --text-display-sm: 36px; --leading-display-sm: 1.05; --weight-display-sm: 500; --tracking-display-sm: -0.03em;
+  --text-hero: 56px; --leading-hero: 1.05; --weight-hero: 600; --tracking-hero: -0.03em;
+  --text-title: 15px; --leading-title: 1.4; --weight-title: 600; --tracking-title: 0;
+  --text-body: 13px; --leading-body: 1.5; --weight-body: 400; --tracking-body: 0;
+  --text-body-lg: 14px; --leading-body-lg: 1.5; --weight-body-lg: 400; --tracking-body-lg: 0;
+  --text-figure: 13px; --leading-figure: 1.4; --weight-figure: 400; --tracking-figure: 0;
+  --text-label: 11px; --leading-label: 1.3; --weight-label: 400; --tracking-label: 0.1em;
+  --text-caption: 12px; --leading-caption: 1.4; --weight-caption: 400; --tracking-caption: 0;
+
+  --space-0_5: 2px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-14: 56px;
+
+  --radius-none: 0px;
+  --radius-xs: 2px;
+  --radius-sm: 3px;
+  --radius-default: 4px;
+  --radius-md: 6px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  --shadow-menu: 0 8px 24px rgba(0,0,0,0.5);
+  --shadow-sheet: 0 -12px 40px rgba(0,0,0,0.5);
+  --ring-focus: 0 0 0 2px #0E0F11, 0 0 0 4px #F0B429;
+  --ring-network: inset 0 2px 0 var(--color-network);
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+
+  /* Active network accent: set on <html data-network="…"> */
+  --color-network: var(--color-network-mainnet);
+}
+
+[data-network="sepolia"] { --color-network: var(--color-network-sepolia); }
+[data-network="local"] { --color-network: var(--color-network-local); }
+
+html { background: var(--color-bg-canvas); color: var(--color-text-primary); font-family: var(--font-sans); color-scheme: dark; }
+.num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 2px; }
+@keyframes ethra-pulse { 0%, 100% { opacity: 1 } 50% { opacity: .45 } }
+.skeleton { background: var(--color-bg-muted); border-radius: var(--radius-xs); animation: ethra-pulse 1.6s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .skeleton { animation: none; } }
