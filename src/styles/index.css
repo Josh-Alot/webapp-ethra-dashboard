@@ -2,3 +2,6 @@
 @import './tokens.css';
 
 @config '../../tailwind.config.js';
+
+/* Not in the handoff tokens: the wallet is on a chain Ethra doesn't support. */
+[data-network="unsupported"] { --color-network: var(--color-loss); }

@@ -84,6 +84,23 @@ export function ChevronDownIcon(props: IconProps) {
   )
 }
 
+export function CheckIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M5 12.5l4.5 4.5L19 7.5" />
+    </Icon>
+  )
+}
+
+export function WarningIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M12 3l9.5 17h-19z" />
+      <path d="M12 10v4M12 17.5v.01" />
+    </Icon>
+  )
+}
+
 /** Loading spinner used inside buttons. Inherits the text color. */
 export function Spinner({ size = 14, className }: IconProps) {
   return (
