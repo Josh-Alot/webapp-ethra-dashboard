@@ -1,17 +1,23 @@
-import { EthraWordmark } from '../components/Logo'
+import { AppShell } from './AppShell'
+import { DataColumn } from './DataColumn'
 import { DevPage } from './DevPage'
+import { SummaryPanel } from './SummaryPanel'
 
-// Minimal routing until the app shell (Feature 2) needs more than one real screen.
+// Minimal routing: /dev renders the component board, everything else the dashboard.
 function App() {
   if (window.location.pathname === '/dev') {
     return <DevPage />
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-6 bg-surface-canvas p-6">
-      <EthraWordmark size={40} />
-      <p className="text-label uppercase text-ink-muted">Work in progress</p>
-    </main>
+    <AppShell>
+      <SummaryPanel>
+        <p className="text-label uppercase text-ink-muted">Summary · Feature 4</p>
+      </SummaryPanel>
+      <DataColumn>
+        <p className="px-6 py-7 text-label uppercase text-ink-muted">Tokens and transactions · Features 6–7</p>
+      </DataColumn>
+    </AppShell>
   )
 }
 

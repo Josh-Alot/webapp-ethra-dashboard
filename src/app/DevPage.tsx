@@ -3,11 +3,15 @@ import { Button } from '../components/Button'
 import { IconButton } from '../components/IconButton'
 import { CloseIcon, CopyIcon, ExternalLinkIcon, PowerIcon, RetryIcon, WalletIcon } from '../components/icons'
 import { EthraSymbol, EthraWordmark } from '../components/Logo'
+import { NetworkBadge } from '../components/NetworkBadge'
 import { SegmentedControl } from '../components/SegmentedControl'
 import { Skeleton } from '../components/Skeleton'
 import { StatusBadge } from '../components/StatusBadge'
 import { Toggle } from '../components/Toggle'
+import { NETWORKS } from '../config/chains'
 import { formatAmount, formatDate, formatUsd, shortenAddress } from '../lib/format'
+
+const BADGE_VARIANTS = ['selector', 'static', 'compact'] as const
 
 const TYPE_OPTIONS = [
   { value: 'all', label: 'All' },
@@ -187,6 +191,25 @@ export function DevPage() {
           <Specimen caption="Ring 72">
             <Skeleton shape="ring" width={72} />
           </Specimen>
+        </Row>
+      </Section>
+
+      <Section title="NetworkBadge">
+        {NETWORKS.map((network) => (
+          <Row key={network.chain.id}>
+            {BADGE_VARIANTS.map((variant) => (
+              <Specimen key={variant} caption={`${network.name} · ${variant}`}>
+                <NetworkBadge active={{ status: 'supported', network }} variant={variant} />
+              </Specimen>
+            ))}
+          </Row>
+        ))}
+        <Row>
+          {BADGE_VARIANTS.map((variant) => (
+            <Specimen key={variant} caption={`Unsupported · ${variant}`}>
+              <NetworkBadge active={{ status: 'unsupported', chainId: 137 }} variant={variant} />
+            </Specimen>
+          ))}
         </Row>
       </Section>
 
