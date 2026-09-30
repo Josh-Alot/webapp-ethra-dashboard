@@ -1,9 +1,13 @@
 import type { Address } from 'viem'
-import { useConnect, useConnection, useConnectors } from 'wagmi'
+import { mainnet } from 'viem/chains'
+import { useConnect, useConnection, useConnectors, useEnsName } from 'wagmi'
+import { useActiveNetwork } from './useActiveNetwork'
 
 export interface Wallet {
   /** Checksummed address. `undefined` while no wallet is connected. */
   address: Address | undefined
+  /** Primary ENS name of the address. Only looked up on mainnet; `undefined` everywhere else. */
+  ensName: string | undefined
   isConnected: boolean
   /** True while the wallet popup is open, after the user clicked connect. */
   isConnecting: boolean
@@ -23,8 +27,18 @@ export function useWallet(): Wallet {
   const [connector] = useConnectors()
   const connectMutation = useConnect()
 
+  const active = useActiveNetwork()
+  const isMainnet = active.status === 'supported' && active.network.key === 'mainnet'
+  const ens = useEnsName({
+    address: connection.address,
+    chainId: mainnet.id,
+    query: { enabled: isMainnet && connection.address !== undefined },
+  })
+
   return {
     address: connection.address,
+    // A disabled query still returns what it has cached, so check the network again here.
+    ensName: isMainnet ? (ens.data ?? undefined) : undefined,
     isConnected: connection.status === 'connected',
     isConnecting: connectMutation.isPending,
     isReconnecting: connection.status === 'reconnecting',

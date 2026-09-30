@@ -68,3 +68,8 @@ export const NETWORKS: readonly NetworkConfig[] = [
 export function getNetwork(chainId: number): NetworkConfig | undefined {
   return NETWORKS.find((network) => network.chain.id === chainId)
 }
+
+/** Explorer page for an address. `undefined` on networks without an explorer (Anvil). */
+export function explorerAddressUrl(network: NetworkConfig, address: string): string | undefined {
+  return network.explorerUrl ? `${network.explorerUrl}/address/${address}` : undefined
+}
