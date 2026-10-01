@@ -1,5 +1,6 @@
 import { useEffect, type ReactNode } from 'react'
 import { AddressChip } from '../components/AddressChip'
+import { DisconnectButton } from '../components/DisconnectButton'
 import { Header } from '../components/Header'
 import { explorerAddressUrl } from '../config/chains'
 import { useActiveNetwork } from '../data/useActiveNetwork'
@@ -25,11 +26,14 @@ export function AppShell({ children }: AppShellProps) {
         account={
           isConnected &&
           address && (
-            <AddressChip
-              address={address}
-              ensName={ensName}
-              explorerUrl={active.status === 'supported' ? explorerAddressUrl(active.network, address) : undefined}
-            />
+            <>
+              <AddressChip
+                address={address}
+                ensName={ensName}
+                explorerUrl={active.status === 'supported' ? explorerAddressUrl(active.network, address) : undefined}
+              />
+              <DisconnectButton />
+            </>
           )
         }
       />

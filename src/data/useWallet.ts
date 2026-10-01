@@ -16,6 +16,8 @@ export interface Wallet {
   /** Why the last connect attempt failed (user rejected, no wallet installed, …). Cleared on retry. */
   connectError: Error | null
   connect: () => void
+  /** Ends the session and drops every cached query, so the next wallet never sees this one's data. */
+  disconnect: () => void
 }
 
 /**
@@ -44,5 +46,17 @@ export function useWallet(): Wallet {
     isReconnecting: connection.status === 'reconnecting',
     connectError: connectMutation.error,
     connect: () => connectMutation.mutate({ connector }),
+    // TODO(human): implement `disconnect`. Two hooks, called at the top of `useWallet` with the others:
+    //
+    // - `useDisconnect()` from 'wagmi': a mutation, same shape as `connectMutation` above.
+    // - `useQueryClient()` from '@tanstack/react-query': the app's query cache (the QueryClient
+    //   created in main.tsx, reached through Context).
+    //
+    // Then `disconnect` calls the mutation's `mutate`. It takes two arguments here:
+    //   1st: the variables. Disconnect needs none, so pass `undefined`.
+    //   2nd: `{ onSuccess: () => ... }`, a callback that runs only if the disconnect worked.
+    // Inside `onSuccess`, call `removeQueries()` on the query client: with no arguments it
+    // removes every cached query.
+    disconnect: () => {},
   }
 }
