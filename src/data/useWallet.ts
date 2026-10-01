@@ -1,6 +1,7 @@
 import type { Address } from 'viem'
 import { mainnet } from 'viem/chains'
-import { useConnect, useConnection, useConnectors, useEnsName } from 'wagmi'
+import { useConnect, useConnection, useConnectors, useEnsName, useDisconnect } from 'wagmi'
+import { useQueryClient } from '@tanstack/react-query'
 import { useActiveNetwork } from './useActiveNetwork'
 
 export interface Wallet {
@@ -28,6 +29,8 @@ export function useWallet(): Wallet {
   const connection = useConnection()
   const [connector] = useConnectors()
   const connectMutation = useConnect()
+  const disconnectMutation = useDisconnect()
+  const queryClient = useQueryClient()
 
   const active = useActiveNetwork()
   const isMainnet = active.status === 'supported' && active.network.key === 'mainnet'
@@ -46,17 +49,8 @@ export function useWallet(): Wallet {
     isReconnecting: connection.status === 'reconnecting',
     connectError: connectMutation.error,
     connect: () => connectMutation.mutate({ connector }),
-    // TODO(human): implement `disconnect`. Two hooks, called at the top of `useWallet` with the others:
-    //
-    // - `useDisconnect()` from 'wagmi': a mutation, same shape as `connectMutation` above.
-    // - `useQueryClient()` from '@tanstack/react-query': the app's query cache (the QueryClient
-    //   created in main.tsx, reached through Context).
-    //
-    // Then `disconnect` calls the mutation's `mutate`. It takes two arguments here:
-    //   1st: the variables. Disconnect needs none, so pass `undefined`.
-    //   2nd: `{ onSuccess: () => ... }`, a callback that runs only if the disconnect worked.
-    // Inside `onSuccess`, call `removeQueries()` on the query client: with no arguments it
-    // removes every cached query.
-    disconnect: () => {},
+    disconnect: () => {
+      disconnectMutation.mutate(undefined, { onSuccess: () => queryClient.removeQueries() })
+    },
   }
 }
