@@ -1,5 +1,5 @@
 import type { Chain } from 'viem'
-import { createConfig, http, type Transport } from 'wagmi'
+import { createConfig, http, injected, type Transport } from 'wagmi'
 import { NETWORKS, getNetwork } from './chains'
 
 // wagmi uses the first chain in the config while no wallet is connected,
@@ -14,4 +14,6 @@ for (const network of NETWORKS) {
   transports[network.chain.id] = http(network.rpcUrl || undefined)
 }
 
-export const wagmiConfig = createConfig({ chains, transports })
+// `injected` talks to the browser wallet (MetaMask, Rabby, …) through window.ethereum.
+// WalletConnect can be added to this list later without touching the UI.
+export const wagmiConfig = createConfig({ chains, transports, connectors: [injected()] })
